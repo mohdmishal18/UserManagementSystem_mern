@@ -1,10 +1,13 @@
 import React from 'react'
 
+import Header from './components/user/header'
+
 function App()
 {
   return (
     <>
-    <h1>User Management</h1>
+      <Header/>
+      <h1>User Management</h1>
     </>
   )
 }
