@@ -1,4 +1,6 @@
 import express from 'express'
+import { protect } from '../middlewares/authMiddleware.js';
+
 import
 { 
     authUser,
@@ -16,8 +18,8 @@ userRouter
 .post('/logout', logoutUser)
 
 .route('/profile')
-.get(getUserProfile)
-.put(updateUserProfile)
+.get(protect , getUserProfile)
+.put(protect , updateUserProfile)
 
 
 
