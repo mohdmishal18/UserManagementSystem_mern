@@ -81,7 +81,16 @@ const logoutUser = asyncHandler(async (req, res) =>
 // @access private
 const getUserProfile = asyncHandler(async (req, res) =>
 {
-    res.status(200).json({message : 'User Profile'})
+    const { _id , name , email } = req.user
+
+    const user = 
+    {
+        _id,
+        name,
+        email
+    }
+
+    res.status(200).json({user})
 })
 
 // @desc Update User Profile
@@ -89,7 +98,30 @@ const getUserProfile = asyncHandler(async (req, res) =>
 // @access Private
 const updateUserProfile = asyncHandler(async (req, res) =>
 {
-    res.status(200).json({message : 'Update user profile'})
+    const user = await User.findById(req.user._id)
+    const { name , email , password } = req.body
+    if(user)
+    {
+        user.name = name || user.name
+        user.email = email || user.email
+
+        if(password)
+        {
+            user.password = password
+        }
+
+        const updatedUser = await user.save()
+        res.status(200).json({
+            _id : updatedUser._id,
+            name : updatedUser.name,
+            email : updatedUser.email
+        })
+    }
+    else
+    {
+        res.status(404)
+        throw new Error('User not Found')
+    }
 })
 
 export 
