@@ -1,4 +1,6 @@
 import React from 'react'
+import { Outlet } from 'react-router-dom'
+import { Container } from 'react-bootstrap'
 
 import Header from './components/user/header'
 
@@ -7,7 +9,9 @@ function App()
   return (
     <>
       <Header/>
-      <h1>User Management</h1>
+      <Container className='my-2'>
+        <Outlet/>
+      </Container>
     </>
   )
 }
