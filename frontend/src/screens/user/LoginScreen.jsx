@@ -6,7 +6,7 @@ import { useDispatch , useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
 
 import FormContainer from '../../components/user/FormContainer'
-import { useLoginMutation } from '../../slices/user/usersApiSlice'
+import { useLoginMutation } from '../../slices/user/usersApiSlice.js'
 import { setCredentials } from '../../slices/user/authSlice'
 
 const LoginScreen = () =>
