@@ -13,7 +13,7 @@ import
 const userRouter = express.Router();
 
 userRouter
-.post('/' ,registerUser)
+.post('/register' ,registerUser)
 .post('/auth' , authUser)
 .post('/logout', logoutUser)
 
