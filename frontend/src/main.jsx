@@ -11,6 +11,7 @@ import { Provider } from 'react-redux'
 import App from './App.jsx'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
+import './app.css'
 
 import HomeScreen from './screens/user/HomeScreen.jsx'
 import LoginScreen from './screens/user/LoginScreen.jsx'
