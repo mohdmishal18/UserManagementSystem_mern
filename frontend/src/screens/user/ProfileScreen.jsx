@@ -82,12 +82,6 @@ const ProfileScreen = () => {
             return;
           }
       }
-        // const formData = new FormData();
-        // formData.append("_id", userInfo._id);
-        // formData.append("name", name);
-        // formData.append("email", email);
-        // formData.append("password", password);
-        // formData.append("profileImage", imageUrl);
 
         const res = await updateProfile({
           _id : userInfo._id,
@@ -98,6 +92,7 @@ const ProfileScreen = () => {
         }).unwrap();
         dispatch(setCredentials({ ...res }));
         toast.success('Profile Updated');
+        navigate('/profile')
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }

@@ -102,7 +102,6 @@ const getUserProfile = asyncHandler(async (req, res) =>
 // @access Private
 const updateUserProfile = asyncHandler(async (req, res) =>
 {
-    console.log("inside updateuser profile")
     const user = await User.findById(req.user._id)
 
     const { name , email , password , imageUrl  } = req.body
