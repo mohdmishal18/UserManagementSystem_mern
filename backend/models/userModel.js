@@ -1,6 +1,7 @@
 import mongoose  from "mongoose";
 import bcrypt from "bcryptjs";
 
+const defaultProfile = 'https://avatar.iran.liara.run/public/boy?username=Ash'
 const userSchema = mongoose.Schema({
     name : 
     {
@@ -17,8 +18,19 @@ const userSchema = mongoose.Schema({
     {
         type : String,
         required : true
+    },
+    isAdmin : 
+    {
+        type : String,
+        default : false
     }
-} ,
+    ,
+    profileImage : 
+    {
+        type : String,
+        default : defaultProfile
+    }
+},
 {
     timestamps : true
 })

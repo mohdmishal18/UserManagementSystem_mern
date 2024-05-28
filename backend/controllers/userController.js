@@ -1,6 +1,7 @@
 import asyncHandler from "express-async-handler"
 import User from '../models/userModel.js'
 import generateToken from '../utils/generateTokens.js'
+import cloudinary from '../utils/cloudinary.js'
 
 // @desc Auth user/set token
 // route POST /api/users/auth
@@ -17,7 +18,8 @@ const authUser = asyncHandler(async (req, res) =>
         res.status(201).json({
             _id : user._id,
             name : user.name,
-            email : user.email
+            email : user.email,
+            profileImage : user.profileImage
         })
     }
     else
@@ -54,7 +56,8 @@ const registerUser = asyncHandler(async (req, res) =>
         res.status(201).json({
             _id : user._id,
             name : user.name,
-            email : user.email
+            email : user.email,
+            profileImage : user.profileImage
         })
     }
     else
@@ -81,13 +84,14 @@ const logoutUser = asyncHandler(async (req, res) =>
 // @access private
 const getUserProfile = asyncHandler(async (req, res) =>
 {
-    const { _id , name , email } = req.user
+    const { _id , name , email , profileImage } = req.user
 
     const user = 
     {
         _id,
         name,
-        email
+        email,
+        profileImage
     }
 
     res.status(200).json({user})
@@ -98,8 +102,10 @@ const getUserProfile = asyncHandler(async (req, res) =>
 // @access Private
 const updateUserProfile = asyncHandler(async (req, res) =>
 {
+    console.log("inside updateuser profile")
     const user = await User.findById(req.user._id)
-    const { name , email , password } = req.body
+
+    const { name , email , password , imageUrl  } = req.body
     if(user)
     {
         user.name = name || user.name
@@ -110,11 +116,18 @@ const updateUserProfile = asyncHandler(async (req, res) =>
             user.password = password
         }
 
+        if(imageUrl)
+        {
+            user.profileImage = imageUrl
+        }
+
         const updatedUser = await user.save()
+
         res.status(200).json({
             _id : updatedUser._id,
             name : updatedUser.name,
-            email : updatedUser.email
+            email : updatedUser.email,
+            profileImage : updatedUser.profileImage
         })
     }
     else

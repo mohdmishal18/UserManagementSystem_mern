@@ -18,6 +18,7 @@ import HomeScreen from './screens/user/HomeScreen.jsx'
 import LoginScreen from './screens/user/LoginScreen.jsx'
 import RegisterScreen from './screens/user/RegisterScreen.jsx'
 import ProfileScreen from './screens/user/ProfileScreen.jsx'
+import ProfileCard from './components/user/ProfileCard.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -29,7 +30,8 @@ const router = createBrowserRouter(
       <Route path='/register' element={<RegisterScreen/>}/>
 
       <Route path='' element={<PrivateRoute/>}>
-        <Route path='/profile' element={<ProfileScreen/>}/>
+        <Route path='/edit-profile' element={<ProfileScreen/>}/>
+        <Route path='/profile' element={<ProfileCard/>}/>
       </Route>
       
     </Route>
