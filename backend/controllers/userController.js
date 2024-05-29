@@ -119,7 +119,7 @@ const updateUserProfile = asyncHandler(async (req, res) =>
         {
             if (publicId && publicId.trim() !== '') {
                 try {
-                  // Include folder path in publicId
+                  
                   const folderPath = 'profilePictures';
                   const fullPath = `${folderPath}/${publicId}`;
                   const result = await cloudinary.uploader.destroy(fullPath);

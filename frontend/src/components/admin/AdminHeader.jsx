@@ -32,7 +32,7 @@ const AdminHeader = () =>
         <header>
             <Navbar bg='dark' variant='dark' expand='lg' collapseOnSelect>
                 <Container>
-                    <LinkContainer to='/'>
+                    <LinkContainer to='/admin/home'>
                         <Navbar.Brand>Admin</Navbar.Brand>
                     </LinkContainer>
                     <Navbar.Toggle aria-controls='basic-navbar-nav' />

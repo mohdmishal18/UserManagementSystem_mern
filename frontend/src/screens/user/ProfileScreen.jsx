@@ -7,6 +7,7 @@ import { toast } from 'react-toastify';
 import { useUpdateUserMutation } from '../../slices/user/usersApiSlice.js';
 import { setCredentials } from '../../slices/user/authSlice.js';
 import Loader from '../../components/user/Loader.jsx';
+
 // import axios from 'axios';
 
 const ProfileScreen = () => {

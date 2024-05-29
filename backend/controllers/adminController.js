@@ -21,7 +21,8 @@ const authAdmin = asyncHandler(async (req, res) =>
     }
     else
     {
-        res.status(400).json({message : "You are not the admin"})
+        res.status(400)
+        throw new Error('Invalid Email or Password')
     }
 })
 
