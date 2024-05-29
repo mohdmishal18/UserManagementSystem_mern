@@ -4,7 +4,7 @@ import {
     authAdmin,
     logoutAdmin,
     getUsers,
-
+    addNewUser
 
 } from '../controllers/adminController.js'
 
@@ -16,7 +16,7 @@ adminRoute
 
 .route('/users')
 .get(adminProtect , getUsers)
-// .post(adminProtect , addNewUser)
+.post(adminProtect , addNewUser)
 // .put(adminProtect , editUser)
 
 export default adminRoute;

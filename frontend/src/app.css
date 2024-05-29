@@ -9,6 +9,13 @@
     transform: translate(-50%, -50%);
     z-index: 1000; /* Ensure it's above other content */
   }
+
+  .loader-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+  }
   
   .text-center
   {
