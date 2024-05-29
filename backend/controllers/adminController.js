@@ -35,8 +35,17 @@ const logoutAdmin = asyncHandler(async (req, res) =>
     res.status(200).json({message : 'Admin Logged Out'})
 })
 
+const getUsers = asyncHandler(async (req, res) => 
+{
+    const usersData = await User.find({ isAdmin: { $ne: true } });
+  
+    res.status(200).json(usersData);
+});
+
 export 
 {
     authAdmin,
-    logoutAdmin
+    logoutAdmin,
+    getUsers,
+    
 }

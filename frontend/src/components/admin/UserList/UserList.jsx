@@ -3,21 +3,17 @@ import { FaPencilAlt, FaTrashAlt } from 'react-icons/fa';
 import './UserList.css';
 
 const UserList = () => {
+  
   return (
     <div className="container mt-3 mb-4">
       <div className="row justify-content-center">
         <div className="col-lg-9 mt-4 mt-lg-0">
-          {/* Search Bar */}
+          {/* Search Bar and Add New User Button */}
           <div className="input-group mb-3">
-            <input type="text" className="form-control" placeholder="Search by name or email" />
+            <input type="text" className="form-control search-bar" placeholder="Search by name or email" />
             <div className="input-group-append">
-              <button className="btn btn-outline-secondary" type="button">Search</button>
+              <button className="btn btn-primary ml-2" type="button">Add New User</button>
             </div>
-          </div>
-
-          {/* Add New User Button */}
-          <div className="mb-3">
-            <button className="btn btn-primary" onClick={handleAddUser}>Add New User</button>
           </div>
 
           <div className="user-dashboard-info-box table-responsive mb-0 bg-dark p-4 shadow-sm">
@@ -59,11 +55,6 @@ const UserList = () => {
       </div>
     </div>
   );
-}
-
-// Function to handle adding a new user
-const handleAddUser = () => {
-  // Add your logic here for adding a new user
 }
 
 export default UserList;
