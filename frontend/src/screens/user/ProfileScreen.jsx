@@ -26,29 +26,35 @@ const ProfileScreen = () => {
 
   const defaultAvatar = '../../../placeeHolderProfile.jpg'
 
-  useEffect(() => {
+  useEffect(() =>
+  {
     setName(userInfo.name);
     setEmail(userInfo.email);
     setProfileImage(userInfo.profileImage || '');
     setImagePreview(userInfo.profileImage || defaultAvatar); // Set default avatar path
   }, [userInfo]);
 
-  const handleImageChange = (e) => {
+  const handleImageChange = (e) =>
+  {
     const file = e.target.files[0];
-    if (file) {
+    if (file)
+    {
       setImagePreview(URL.createObjectURL(file));
       setProfileImage(file);
     }
   };
 
-  const uploadImage = async (file) => {
+  const uploadImage = async (file) =>
+  {
     const formData = new FormData();
+
     formData.append('file', file);
     formData.append('upload_preset', 'UserManagementSystem');
     formData.append('cloud_name', 'usermanagement')
     formData.append('folder', 'profilePictures');
 
-    try {
+    try
+    {
       const response = await fetch('https://api.cloudinary.com/v1_1/usermanagement/image/upload', {
         method: 'POST',
         body: formData,
@@ -56,39 +62,59 @@ const ProfileScreen = () => {
   
       const data = await response.json();
       return data.secure_url
-    } catch (error) {
+    }
+    catch (error)
+    {
       toast.error('Image upload failed');
       return null;
     }
   };
 
-  const handleCancel = () => {
-    navigate('/profile'); // Redirect to the profile card when canceled
+  const handleCancel = () =>
+  {
+    navigate('/profile');
   };
 
 
-  const submitHandler = async (e) => {
+  const submitHandler = async (e) =>
+  {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      toast.error('Passwords do not match');
-    } else {
-      try {
-        let imageUrl = userInfo.profileImage;
 
-        if (profileImage) {
+    if (password !== confirmPassword)
+    {
+      toast.error('Passwords do not match');
+    }
+    else
+    {
+      try
+      {
+        let imageUrl = userInfo.profileImage;
+        let publicId = ''
+        const cloudinaryUrlPattern = /\/profilePictures\/([^\/]+)\.jpg/;
+
+        const match = cloudinaryUrlPattern.exec(userInfo.profileImage);
+
+        if (match)
+        {
+          publicId = match[1];
+        }
+
+        if (profileImage)
+        {
           imageUrl = await uploadImage(profileImage);
-          console.log("tthis is the image url " , imageUrl)
-          if (!imageUrl) {
+          if (!imageUrl)
+          {
             return;
           }
-      }
+        }
 
         const res = await updateProfile({
           _id : userInfo._id,
           name , 
           email , 
           password,
-          imageUrl
+          imageUrl,
+          publicId
         }).unwrap();
         dispatch(setCredentials({ ...res }));
         toast.success('Profile Updated');

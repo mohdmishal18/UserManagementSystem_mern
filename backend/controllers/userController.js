@@ -104,7 +104,7 @@ const updateUserProfile = asyncHandler(async (req, res) =>
 {
     const user = await User.findById(req.user._id)
 
-    const { name , email , password , imageUrl  } = req.body
+    const { name , email , password , imageUrl , publicId  } = req.body
     if(user)
     {
         user.name = name || user.name
@@ -117,8 +117,24 @@ const updateUserProfile = asyncHandler(async (req, res) =>
 
         if(imageUrl)
         {
+            if (publicId && publicId.trim() !== '') {
+                try {
+                  // Include folder path in publicId
+                  const folderPath = 'profilePictures';
+                  const fullPath = `${folderPath}/${publicId}`;
+                  const result = await cloudinary.uploader.destroy(fullPath);
+                  console.log('Deleted previous image:', result);
+                } catch (error) {
+                  console.error('Error deleting image:', error);
+                  throw new Error('Error deleting previous profile image');
+                }
+              }
+        
+
             user.profileImage = imageUrl
         }
+
+        
 
         const updatedUser = await user.save()
 
