@@ -13,6 +13,7 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './index.css'
 import './app.css'
 
+// user
 import PrivateRoute from './components/user/PrivateRoute.jsx'
 import HomeScreen from './screens/user/HomeScreen.jsx'
 import LoginScreen from './screens/user/LoginScreen.jsx'
@@ -20,21 +21,29 @@ import RegisterScreen from './screens/user/RegisterScreen.jsx'
 import ProfileScreen from './screens/user/ProfileScreen.jsx'
 import ProfileCard from './components/user/ProfileCard.jsx'
 
+// admin
+import AdminLogin from './components/admin/AdminLogin.jsx'
+import AdminHome from './screens/admin/AdminHome.jsx'
+
 const router = createBrowserRouter(
   createRoutesFromElements(
-    <Route path='/' element={<App/>}>
-      <Route index={true} path='/' element={<HomeScreen/>}/>
+    <>
+    {/* user */}
+      <Route path='/' element={<App/>}>
+        <Route index={true} path='/' element={<HomeScreen/>}/>
+        <Route path='/login' element={<LoginScreen/>}/>
+        <Route path='/register' element={<RegisterScreen/>}/>
 
-      <Route path='/login' element={<LoginScreen/>}/>
-
-      <Route path='/register' element={<RegisterScreen/>}/>
-
-      <Route path='' element={<PrivateRoute/>}>
-        <Route path='/edit-profile' element={<ProfileScreen/>}/>
-        <Route path='/profile' element={<ProfileCard/>}/>
+        <Route path='' element={<PrivateRoute/>}>
+          <Route path='/edit-profile' element={<ProfileScreen/>}/>
+          <Route path='/profile' element={<ProfileCard/>}/>
+        </Route>
       </Route>
-      
-    </Route>
+
+      {/* admin */}
+      <Route path='/admin' element={<AdminLogin/>}/>
+      <Route path='/admin/home' element={<AdminHome/>}/>
+    </>
   )
 )
 

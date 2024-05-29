@@ -14,7 +14,7 @@ const authUser = asyncHandler(async (req, res) =>
 
     if(user && await user.matchPassword(password))
     {
-        generateToken(res, user._id)
+        generateToken(res, user._id , 'userJWT')
         res.status(201).json({
             _id : user._id,
             name : user.name,
@@ -52,7 +52,7 @@ const registerUser = asyncHandler(async (req, res) =>
 
     if(user)
     {
-        generateToken(res , user._id)
+        generateToken(res , user._id , "userJWT")
         res.status(201).json({
             _id : user._id,
             name : user.name,
@@ -72,7 +72,7 @@ const registerUser = asyncHandler(async (req, res) =>
 // @access Public
 const logoutUser = asyncHandler(async (req, res) =>
 {
-    res.cookie('jwt','',{
+    res.cookie('userJWT','',{
         httpOnly : true,
         expires : new Date(0)
     })
