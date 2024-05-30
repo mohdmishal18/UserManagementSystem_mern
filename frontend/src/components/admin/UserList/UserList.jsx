@@ -4,7 +4,8 @@ import Loader from '../../user/Loader';
 import { useGetUsersMutation } from '../../../slices/admin/adminApiSlice';
 import './UserList.css';
 
-import AddUser from './AddUser';
+import AddUser from '../AddUser';
+import EditUser from '../EditUser';
 
 const UserList = () => {
   const [users, setUsers] = useState([]);
@@ -12,6 +13,8 @@ const UserList = () => {
   const [search, setSearch] = useState('');
   const [userCount, setUserCount] = useState(users?.length || 0);
   const [showAddUser, setShowAddUser] = useState(false);
+  const [showEditUser , setShowEditUser] = useState(false)
+  const [selectedEditUser , setSelectedEditUser] = useState(null)
 
   const [getUsers, { isLoading }] = useGetUsersMutation();
 
@@ -25,7 +28,7 @@ const UserList = () => {
       }
     }
     fetchData();
-  }, [userCount , showAddUser]);
+  }, [userCount , showAddUser,selectedEditUser,showEditUser]);
 
   useEffect(() => {
     let searchedUsers = filterUser(search, users);
@@ -52,6 +55,15 @@ const UserList = () => {
     setShowAddUser(false);
   };
 
+  function handleEditUserClick(user){
+    setSelectedEditUser(user)
+    setShowEditUser(true);
+  };
+
+  const handleCloseEditUser = () => {
+    setShowEditUser(false);
+  };
+
   return (
     <div className="container mt-3 mb-4">
       <div className="row justify-content-center">
@@ -76,6 +88,7 @@ const UserList = () => {
             </div>
           </div>
           {showAddUser && <AddUser onClose={handleCloseAddUser} />}
+          {showEditUser && <EditUser userData={selectedEditUser} onClose={handleCloseEditUser}/>}
           <div className="user-dashboard-info-box table-responsive mb-0 bg-dark p-4 shadow-sm">
             {isLoading ? (
               <div className="loader-container">
@@ -110,7 +123,7 @@ const UserList = () => {
                         </div>
                       </td>
                       <td>
-                        <button className="btn btn-sm btn-info action-btn" title="Edit"><FaPencilAlt /></button>
+                        <button className="btn btn-sm btn-info action-btn" title="Edit" onClick={() => handleEditUserClick(user)}><FaPencilAlt /></button>
                         <button className="btn btn-sm btn-danger" title="Delete"><FaTrashAlt /></button>
                       </td>
                     </tr>

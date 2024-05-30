@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import FormContainer from '../../../components/user/FormContainer.jsx'
+import FormContainer from '../../components/user/FormContainer';
+import { useUpdateUserDetailsMutation } from '../../slices/admin/adminApiSlice.js';
 import { toast } from 'react-toastify';
-import { useAddNewUserMutation } from '../../../slices/admin/adminApiSlice.js';
-import Loader from '../../user/Loader.jsx';
+import Loader from '../../components/user/Loader.jsx';
 
-const AddUser = ({isOPen , onClose}) => {
+const EditUser = ({userData , onClose}) => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -13,9 +13,17 @@ const AddUser = ({isOPen , onClose}) => {
   const [profileImage, setProfileImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');
 
-  const [addNewUser,{isLoading}] = useAddNewUserMutation();
+  const [updateUserDetails, { isLoading }] = useUpdateUserDetailsMutation();
 
   const defaultAvatar = '../../../placeeHolderProfile.jpg'
+
+  useEffect(() =>
+  {
+    setName(userData.name);
+    setEmail(userData.email);
+    setProfileImage(userData.profileImage || '');
+    setImagePreview(userData.profileImage || defaultAvatar); // Set default avatar path
+  }, []);
 
   const handleImageChange = (e) =>
   {
@@ -66,18 +74,30 @@ const AddUser = ({isOPen , onClose}) => {
     {
       try
       {
-        let imageUrl
+        let imageUrl = userData.profileImage;
+        let publicId = ''
+        const cloudinaryUrlPattern = /\/profilePictures\/([^\/]+)\.jpg/;
+
+        const match = cloudinaryUrlPattern.exec(userData.profileImage);
+
+        if (match)
+        {
+          publicId = match[1];
+        }
+
         if (profileImage)
         {
           imageUrl = await uploadImage(profileImage);
-          console.log("this is the image url ", imageUrl)
+          console.log("this is the image url " , imageUrl);
         }
 
-        const res = await addNewUser({
+        const res = await updateUserDetails({
+          _id : userData._id,
           name , 
           email , 
           password,
           imageUrl,
+          publicId
         }).unwrap();
         toast.success('Profile Updated');
         onClose()
@@ -94,8 +114,8 @@ const AddUser = ({isOPen , onClose}) => {
           <Loader />
         </div>
       )}
-
       <FormContainer>
+        {/* <h1 className="text-white text-center">Update Profile</h1> */}
         <div className="text-center mb-3">
           <input
             type="file"
@@ -162,7 +182,7 @@ const AddUser = ({isOPen , onClose}) => {
             />
           </Form.Group>
           <Button type="submit" variant="primary" className="mt-3">
-            Add User
+            Update
           </Button>
           <Button className='mt-3' variant="secondary" onClick={onClose}>Close</Button>
         </Form>
@@ -171,4 +191,4 @@ const AddUser = ({isOPen , onClose}) => {
   );
 };
 
-export default AddUser;
+export default EditUser;

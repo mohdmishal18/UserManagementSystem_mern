@@ -79,11 +79,119 @@ const addNewUser = asyncHandler(async (req, res) =>
         }
     })
 
+    const updateUserProfile = asyncHandler(async (req, res) =>
+        {
+            const user = await User.findById(req.user._id)
+        
+            const { name , email , password , imageUrl , publicId  } = req.body
+            if(user)
+            {
+                user.name = name || user.name
+                user.email = email || user.email
+        
+                if(password)
+                {
+                    user.password = password
+                }
+        
+                if(imageUrl)
+                {
+                    if (publicId && publicId.trim() !== '') {
+                        try {
+                          
+                          const folderPath = 'profilePictures';
+                          const fullPath = `${folderPath}/${publicId}`;
+                          const result = await cloudinary.uploader.destroy(fullPath);
+                          console.log('Deleted previous image:', result);
+                        } catch (error) {
+                          console.error('Error deleting image:', error);
+                          throw new Error('Error deleting previous profile image');
+                        }
+                      }
+                
+        
+                    user.profileImage = imageUrl
+                }
+        
+                
+        
+                const updatedUser = await user.save()
+        
+                res.status(200).json({
+                    _id : updatedUser._id,
+                    name : updatedUser.name,
+                    email : updatedUser.email,
+                    profileImage : updatedUser.profileImage
+                })
+            }
+            else
+            {
+                res.status(404)
+                throw new Error('User not Found')
+            }
+        })
+
+        const editUser = asyncHandler(async (req, res) =>
+            {
+                console.log("in edit use in admin controller")
+
+                const {_id, name , email , password , imageUrl , publicId  } = req.body
+                const user = await User.findById(_id)
+                console.log(req.body);
+            
+                if(user)
+                {
+                    user.name = name || user.name
+                    user.email = email || user.email
+            
+                    if(password)
+                    {
+                        user.password = password
+                    }
+            
+                    if(imageUrl)
+                    {
+                        if (publicId && publicId.trim() !== '') {
+                            try {
+                              
+                              const folderPath = 'profilePictures';
+                              const fullPath = `${folderPath}/${publicId}`;
+                              const result = await cloudinary.uploader.destroy(fullPath);
+                              console.log('Deleted previous image:', result);
+                            } catch (error) {
+                              console.error('Error deleting image:', error);
+                              throw new Error('Error deleting previous profile image');
+                            }
+                          }
+                    
+            
+                        user.profileImage = imageUrl
+                    }
+            
+                    
+            
+                    const updatedUser = await user.save()
+            
+                    res.status(200).json({
+                        _id : updatedUser._id,
+                        name : updatedUser.name,
+                        email : updatedUser.email,
+                        profileImage : updatedUser.profileImage
+                    })
+                }
+                else
+                {
+                    res.status(404)
+                    throw new Error('User not Found')
+                }
+            })
+
 export 
 {
     authAdmin,
     logoutAdmin,
     getUsers,
     addNewUser,
+    editUser,
 
 }
