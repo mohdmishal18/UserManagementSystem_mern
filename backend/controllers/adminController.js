@@ -1,5 +1,5 @@
 import asyncHandler from "express-async-handler"
-import User from '../models/userModel.js'
+import User from "../models/userModel.js"
 import generateToken from '../utils/generateTokens.js'
 import cloudinary from '../utils/cloudinary.js'
 
@@ -44,8 +44,10 @@ const getUsers = asyncHandler(async (req, res) =>
 
 const addNewUser = asyncHandler(async (req, res) =>
     {
+        console.log("in add new user admin contorller");
         const { name , email , password , imageUrl } = req.body
         const userExists = await User.findOne({email})
+        console.log(req.body);
     
         if(userExists)
         {

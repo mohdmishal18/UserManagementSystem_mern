@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
 import { Form, Button } from 'react-bootstrap';
-import { useSelector } from 'react-redux';
-import FormContainer from '../../components/user/FormContainer';
+import FormContainer from '../../../components/user/FormContainer.jsx'
 import { toast } from 'react-toastify';
-import { useAddNewUsersMutation } from '../../../slices/admin/adminApiSlice.js';
+import { useAddNewUserMutation } from '../../../slices/admin/adminApiSlice.js';
 import Loader from '../../user/Loader.jsx';
 
 const AddUser = ({isOPen , onClose}) => {
@@ -13,8 +12,6 @@ const AddUser = ({isOPen , onClose}) => {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [profileImage, setProfileImage] = useState('');
   const [imagePreview, setImagePreview] = useState('');
-
-  const { userInfo } = useSelector((state) => state.auth);
 
   const [addNewUser,{isLoading}] = useAddNewUserMutation();
 
@@ -69,25 +66,21 @@ const AddUser = ({isOPen , onClose}) => {
     {
       try
       {
-
+        let imageUrl
         if (profileImage)
         {
           imageUrl = await uploadImage(profileImage);
-          if (!imageUrl)
-          {
-            return;
-          }
+          console.log("this is the image url ", imageUrl)
         }
 
         const res = await addNewUser({
-          _id : userInfo._id,
           name , 
           email , 
           password,
           imageUrl,
-          publicId
         }).unwrap();
         toast.success('Profile Updated');
+        onClose()
       } catch (err) {
         toast.error(err?.data?.message || err.error);
       }
@@ -101,8 +94,8 @@ const AddUser = ({isOPen , onClose}) => {
           <Loader />
         </div>
       )}
+
       <FormContainer>
-        {/* <h1 className="text-white text-center">Update Profile</h1> */}
         <div className="text-center mb-3">
           <input
             type="file"
@@ -169,11 +162,9 @@ const AddUser = ({isOPen , onClose}) => {
             />
           </Form.Group>
           <Button type="submit" variant="primary" className="mt-3">
-            Update
+            Add User
           </Button>
-          <Button className='mt-3' variant="danger" onClick={handleCancel}>
-            Cancel
-          </Button>
+          <Button className='mt-3' variant="secondary" onClick={onClose}>Close</Button>
         </Form>
       </FormContainer>
     </div>

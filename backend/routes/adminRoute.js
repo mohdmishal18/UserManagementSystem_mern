@@ -13,10 +13,11 @@ const adminRoute = express.Router()
 adminRoute
 .post('/' , authAdmin)
 .post('/logout' , logoutAdmin)
-
-.route('/users')
-.get(adminProtect , getUsers)
-.post(adminProtect , addNewUser)
+.get('/users', adminProtect , getUsers)
+.post('/users' , adminProtect, addNewUser)
+// .route('/users')
+// .get(adminProtect , getUsers)
+// .post(adminProtect, addNewUser)
 // .put(adminProtect , editUser)
 
 export default adminRoute;
