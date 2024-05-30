@@ -135,8 +135,8 @@ const UserList = () => {
               <table className="table manage-candidates-top mb-0 table-dark">
                 <thead>
                   <tr>
-                    <th>Candidate Name</th>
-                    <th className="action text-right">Action</th>
+                    <th>User's Name</th>
+                    <th className="action text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody>
