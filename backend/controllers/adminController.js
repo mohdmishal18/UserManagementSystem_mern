@@ -131,7 +131,7 @@ const addNewUser = asyncHandler(async (req, res) =>
             }
         })
 
-        const editUser = asyncHandler(async (req, res) =>
+            const editUser = asyncHandler(async (req, res) =>
             {
                 console.log("in edit use in admin controller")
 
@@ -185,6 +185,17 @@ const addNewUser = asyncHandler(async (req, res) =>
                     throw new Error('User not Found')
                 }
             })
+            const deleteUser = asyncHandler(async (req, res) =>
+                {
+                const { userId } = req.body;
+                const deleteUser = await User.findOne({ _id: userId });
+                await User.deleteOne({ _id: userId });
+                res.cookie("userJWT", "", {
+                  httpOnly: true,
+                  expires: new Date(0),
+                });
+                res.status(200).json(deleteUser);
+              });                  
 
 export 
 {
@@ -193,5 +204,5 @@ export
     getUsers,
     addNewUser,
     editUser,
-
+    deleteUser
 }

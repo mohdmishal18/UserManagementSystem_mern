@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { Form, Button, Row, Col } from 'react-bootstrap'
 import { useDispatch, useSelector } from 'react-redux'
 import { toast } from 'react-toastify'
-
+import { ToastContainer } from 'react-toastify'
 import Loader from '../../components/user/Loader.jsx'
 import FormContainer from '../../components/user/FormContainer'
 import { useAdminLoginMutation } from '../../slices/admin/adminApiSlice.js'
@@ -45,7 +45,7 @@ const AdminLogin = () => {
       )}
       <FormContainer>
         <h1 className="text-white">Admin Login</h1>
-
+        <ToastContainer/>
         <Form onSubmit={submitHandler} className="bg-dark text-white p-4 rounded">
           <Form.Group className="my-2" controlId="email">
             <Form.Label>Email Address</Form.Label>

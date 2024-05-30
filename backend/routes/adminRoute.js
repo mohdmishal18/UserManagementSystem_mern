@@ -5,7 +5,8 @@ import {
     logoutAdmin,
     getUsers,
     addNewUser,
-    editUser
+    editUser,
+    deleteUser
 
 } from '../controllers/adminController.js'
 
@@ -17,6 +18,6 @@ adminRoute
 .get('/users', adminProtect , getUsers)
 .post('/users' , adminProtect, addNewUser)
 .put('/users', adminProtect, editUser)
-
+.delete('users',adminProtect, deleteUser)
 
 export default adminRoute;
