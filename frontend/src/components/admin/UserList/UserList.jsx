@@ -84,10 +84,9 @@ const UserList = () => {
           const res = await deleteUser({ userId: userId });
         
            if (res) {
-            setExistingUser((prev) => prev - 1);
+            setUserCount((prev) => prev - 1);
             toast.success("User deleted successfully");
     
-            // deleting from localStorage
               const storedUser = JSON.parse(localStorage.getItem("userInfo"));
               if (storedUser && storedUser._id === userId) {
                 localStorage.removeItem("userInfo");

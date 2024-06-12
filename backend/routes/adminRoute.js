@@ -6,8 +6,7 @@ import {
     getUsers,
     addNewUser,
     editUser,
-    deleteUser
-
+    deleteUser,
 } from '../controllers/adminController.js'
 
 const adminRoute = express.Router()
@@ -18,6 +17,6 @@ adminRoute
 .get('/users', adminProtect , getUsers)
 .post('/users' , adminProtect, addNewUser)
 .put('/users', adminProtect, editUser)
-.delete('users',adminProtect, deleteUser)
+.delete('/users',adminProtect, deleteUser)
 
 export default adminRoute;

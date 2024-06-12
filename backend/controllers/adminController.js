@@ -188,14 +188,14 @@ const addNewUser = asyncHandler(async (req, res) =>
             const deleteUser = asyncHandler(async (req, res) =>
                 {
                 const { userId } = req.body;
-                const deleteUser = await User.findOne({ _id: userId });
+                const deletUser = await User.findOne({ _id: userId });
                 await User.deleteOne({ _id: userId });
                 res.cookie("userJWT", "", {
                   httpOnly: true,
                   expires: new Date(0),
                 });
-                res.status(200).json(deleteUser);
-              });                  
+                res.status(200).json(deletUser);
+              });     
 
 export 
 {
@@ -204,5 +204,5 @@ export
     getUsers,
     addNewUser,
     editUser,
-    deleteUser
+    deleteUser,
 }

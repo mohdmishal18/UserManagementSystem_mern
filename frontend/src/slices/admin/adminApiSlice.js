@@ -62,5 +62,5 @@ export const {
     useGetUsersMutation,
     useAddNewUserMutation,
     useDeleteUserMutation,
-    useUpdateUserDetailsMutation
+    useUpdateUserDetailsMutation,
 } = adminApiSlice
